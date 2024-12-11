@@ -46,7 +46,7 @@ Proverbly is a web platform that showcases a rich collection of English proverbs
 
 - **User Service:**  
     - **Features:** Manage bookmarks, learning records, and user data.  
-    - **Tech Stack:** Next.js (TypeScript)  
+    - **Tech Stack:** Nest.js (TypeScript)  
     - **Database:** MongoDB  
     - **Docker:** Containerize database and API server.  
 
