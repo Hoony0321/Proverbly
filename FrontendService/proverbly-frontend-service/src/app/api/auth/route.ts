@@ -15,7 +15,6 @@ export async function POST(request: Request) {
   try {
     const { email, password } = await request.json();
 
-    console.log(process.env.NEXT_SERVER_USER_SERVICE_API_URL);
     const response = await fetch(
       `${process.env.NEXT_SERVER_USER_SERVICE_API_URL}/users/email/${email}`,
       {
@@ -25,8 +24,6 @@ export async function POST(request: Request) {
         },
       }
     );
-
-    console.log(response);
 
     if (!response.ok) {
       const contentType = response.headers.get("content-type");

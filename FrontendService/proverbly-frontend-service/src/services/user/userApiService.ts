@@ -1,6 +1,7 @@
 import { SignUpForm } from "@/app/models/user";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_USER_SERVICE_API_URL;
+const FRONTEND_SERVER_URL = process.env.NEXT_PUBLIC_FRONTEND_SERVER_URL;
 
 export async function getAllUsersApi() {
   try {
@@ -24,7 +25,6 @@ export async function getAllUsersApi() {
 
 export async function getUserByEmail(email: string) {
   try {
-    console.log(API_BASE_URL);
     const response = await fetch(`${API_BASE_URL}/users/email/${email}`, {
       method: "GET",
       headers: {
@@ -65,7 +65,7 @@ export async function getUserByEmailAndPasswordApi(
   password: string
 ) {
   try {
-    const response = await fetch("http://localhost:3000/api/auth", {
+    const response = await fetch(`${FRONTEND_SERVER_URL}/api/auth`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -92,7 +92,6 @@ export async function getUserByEmailAndPasswordApi(
 
 export async function createUserApi(user: SignUpForm) {
   try {
-    console.log(API_BASE_URL);
     const response = await fetch(`${API_BASE_URL}/users`, {
       method: "POST",
       headers: {
