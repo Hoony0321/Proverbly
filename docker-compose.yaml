@@ -1,0 +1,86 @@
+version: "3.9" # Docker Compose 파일 버전
+
+services:
+  frontend:
+    image: proverbly-frontend-service:latest
+    # build:
+    #   context: ./FrontendService/proverbly-frontend-service
+    environment:
+      - NEXT_PUBLIC_USER_SERVICE_API_URL=http://localhost:3001/user/api
+      - NEXT_PUBLIC_PROVERB_SERVICE_API_URL=http://localhost:8080/proverb/api
+      - NEXT_SERVER_USER_SERVICE_API_URL=http://user-service:3000/user/api
+    ports:
+      - "3000:3000" # 호스트:컨테이너 포트 매핑
+    depends_on:
+      - user-service
+      - proverb-service
+    networks:
+      - proverbly-network
+    volumes:
+      - frontend-data:/data
+
+  user-service:
+    image: proverbly-user-service:latest
+    # build:
+    #   context: ./UserService/proverbly-user-service
+    environment:
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/proverbly
+    ports:
+      - "3001:3000" # 호스트:컨테이너 포트 매핑
+    networks:
+      - proverbly-network
+    depends_on:
+      - mongodb
+    volumes:
+      - user-service-data:/data
+
+  proverb-service:
+    image: proverbly-proverb-service:latest
+    # build:
+    #   context: ./ProverbService/service
+    environment:
+      - DATABASE_URL=jdbc:postgresql://postgres:5432/proverbly
+      - DATABASE_USER=postgres
+      - DATABASE_PASSWORD=proverbly
+    ports:
+      - "8080:8080"
+    networks:
+      - proverbly-network
+    volumes:
+      - proverb-service-data:/data
+    depends_on:
+      - postgres
+
+  mongodb:
+    image: mongo:5.0.11
+    volumes:
+      - mongodb-data:/db
+    ports:
+      - "27018:27017" # 호스트:컨테이너 포트 매핑
+    networks:
+      - proverbly-network
+
+  postgres:
+    image: postgres:15.1
+    ports:
+      - "5433:5432"
+    networks:
+      - proverbly-network
+    volumes:
+      - postgres-data:/db
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=proverbly
+      - POSTGRES_DB=proverbly
+
+networks:
+  proverbly-network:
+    driver: bridge
+
+volumes:
+  frontend-data:
+  user-service-data:
+  proverb-service-data:
+  mongodb-data:
+  postgres-data:

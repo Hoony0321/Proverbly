@@ -16,7 +16,7 @@ public class Proverb {
     private Long id;
 
     @Column(nullable = false, length = 200)
-    private String name;
+    private String text;
 
     @Column(nullable = false, length = 500)
     private String meaning;
