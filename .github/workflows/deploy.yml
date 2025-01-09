@@ -22,7 +22,7 @@ jobs:
       - name: Build and Push user-service
         uses: docker/build-push-action@v4
         with:
-          context: ./UserService
+          context: ./UserService/proverbly-user-service
           push: true
           tags: hoony0321/proverbly-user-service:latest
 
