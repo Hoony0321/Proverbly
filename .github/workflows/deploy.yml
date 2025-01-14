@@ -32,3 +32,9 @@ jobs:
           context: ./ProverbService/service
           push: true
           tags: hoony0321/proverbly-proverb-service:latest
+
+      - name: Connect to EC2 and deploy
+        run: |
+          echo "${{ secrets.EC2_SSH_KEY }}" | base64 --decode > ~/ec2-key.pem
+          chmod 600 ~/ec2-key.pem
+          ssh -i ~/ec2-key.pem -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} "bash -s" < /home/ubuntu/update-and-restart.sh
