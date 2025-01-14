@@ -44,4 +44,22 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
+
+  @Get(':id/favorites')
+  getFavorites(@Param('id') id: string) {
+    return this.usersService.getFavorites(id);
+  }
+
+  @Post(':id/favorites/:proverbId')
+  addFavorite(@Param('id') id: string, @Param('proverbId') proverbId: number) {
+    return this.usersService.addFavorite(id, proverbId);
+  }
+
+  @Delete(':id/favorites/:proverbId')
+  removeFavorite(
+    @Param('id') id: string,
+    @Param('proverbId') proverbId: number,
+  ) {
+    return this.usersService.removeFavorite(id, proverbId);
+  }
 }

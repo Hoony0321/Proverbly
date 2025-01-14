@@ -56,4 +56,24 @@ export class UsersService {
   async findByEmail(email: string) {
     return this.userModel.findOne({ email }).exec();
   }
+
+  async addFavorite(id: string, proverbId: number) {
+    return this.userModel.findByIdAndUpdate(
+      id,
+      { $addToSet: { favorites: proverbId } },
+      { new: true },
+    );
+  }
+
+  async removeFavorite(id: string, proverbId: number) {
+    return this.userModel.findByIdAndUpdate(
+      id,
+      { $pull: { favorites: proverbId } },
+      { new: true },
+    );
+  }
+
+  async getFavorites(id: string) {
+    return this.userModel.findById(id, { favorites: 1 }).exec();
+  }
 }
