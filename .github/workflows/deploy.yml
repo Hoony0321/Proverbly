@@ -30,14 +30,14 @@ jobs:
         with:
           context: ./UserService/proverbly-user-service
           push: true
-          tags: hoony0321/proverbly-user-service:${{ env.TAG }}
+          tags: hoony0321/proverbly-user-service:latest
 
       - name: Build and Push proverb-service
         uses: docker/build-push-action@v4
         with:
           context: ./ProverbService/service
           push: true
-          tags: hoony0321/proverbly-proverb-service:${{ env.TAG }}
+          tags: hoony0321/proverbly-proverb-service:latest
 
       - name: Connect to EC2 and deploy
         run: |
