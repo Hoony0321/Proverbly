@@ -1,5 +1,5 @@
 export interface Proverb {
-  id: string;
+  id: number;
   text: string;
   meaning: string;
   examples: string[];

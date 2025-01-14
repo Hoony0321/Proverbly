@@ -19,3 +19,23 @@ export async function getProverbApi() {
     throw error;
   }
 }
+
+export async function getProverbsByIdApi(id: number) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/proverb/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch proverb");
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching proverb:", error);
+    throw error;
+  }
+}

@@ -110,3 +110,39 @@ export async function createUserApi(user: SignUpForm) {
     throw error;
   }
 }
+
+export async function addUserFavoriteProverbApi(
+  userId: string,
+  proverbId: number
+) {
+  try {
+    await fetch(`${API_BASE_URL}/users/${userId}/favorites/${proverbId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (error) {
+    console.error("Error adding favorite proverb:", error);
+    throw error;
+  }
+}
+
+export async function deleteUserFavoriteProverbApi(
+  userId: string,
+  proverbId: number
+) {
+  await fetch(`${API_BASE_URL}/users/${userId}/favorites/${proverbId}`, {
+    method: "DELETE",
+  });
+}
+
+export async function getUserFavoriteProverbsApi(userId: string) {
+  const response = await fetch(`${API_BASE_URL}/users/${userId}/favorites`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  return await response.json();
+}
